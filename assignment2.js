@@ -55,8 +55,19 @@ Array.prototype.myEvery = function(callbackFn) {
 
 
 // REDUCE //
-Array.prototype.myReduce = function() {
+Array.prototype.myReduce = function(callbackFn) {
 
+    currentValue = this[0], nextValue = this[1];
+    funcOutput = reducer(currentValue, nextValue);
+
+    for(var i = 2; i < this.length; i++)
+    {
+        totalOutput = reducer(funcOutput, this[i]);
+        funcOutput = totalOutput;
+        callbackFn(currentValue, nextValue, i, this);
+    }
+
+    return totalOutput; 
 };
 
 // INCLUDES //
@@ -119,6 +130,7 @@ Array.prototype.myLastIndexOf = function(x, n) {
         else if (n > 0)
             i = n;
     }
+    else i = this.length;
     while (i--) {
         if (this === undefined) continue;
         if (this[i] === x) return i;
